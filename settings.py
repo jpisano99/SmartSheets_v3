@@ -11,8 +11,9 @@ database = dict(
 )
 
 #Smartsheet Config settings
-smartsheet = dict(
-    SMARTSHEET_TOKEN = passwords["SMARTSHEET_TOKEN"]
+smartsheet_conf = dict(
+    SMARTSHEET_TOKEN=passwords["SMARTSHEET_TOKEN"],
+    SHEET_NAME="Test Sheet"
 )
 
 #application predefined constants
