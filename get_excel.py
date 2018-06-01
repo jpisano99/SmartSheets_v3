@@ -1,19 +1,12 @@
 __author__ = 'jpisano'
 
-import requests
-from settings import smartsheet
+import smartsheet
+import os
+from settings import smartsheet_conf
 
-my_token  = smartsheet['SMARTSHEET_TOKEN']
+ss_token = smartsheet_conf['SMARTSHEET_TOKEN']
+ss = smartsheet.Smartsheet(ss_token)
 
-#ACI to Production Sheet
-#sheetid = '4348263848535940'
+sheet_id = '4816554870237060'  # "cust_ref_ent" Sheet ID
 
-#test sheet ID
-sheetid= '4816554870237060'
-
-url = 'https://api.smartsheet.com/2.0/sheets/' + sheetid
-myheader = {'Authorization' : 'Bearer '+ my_token,'Accept':'application/vnd.ms-excel'}
-
-response = requests.get (url, headers = myheader)
-output = open('jim.xls','wb')
-output.write (response.content)
+ss.Sheets.get_sheet_as_excel(sheet_id, os.path.abspath('c:/users/jim/desktop'))

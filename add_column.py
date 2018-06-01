@@ -6,14 +6,26 @@ from settings import smartsheet_conf
 ss_token = smartsheet_conf['SMARTSHEET_TOKEN']
 ss = smartsheet.Smartsheet(ss_token)
 
-sheet_id = '4816554870237060'  # "test" Sheet ID
-row_id = '4542989902079876'  # row number 4
-customer_col = '4113607471458180'  # Customer name
+sheet_id = '4816554870237060'  # "cust_ref_ent" Sheet ID
 
-url = 'https://api.smartsheet.com/2.0/sheets/' + sheet_id + '/columns'
-my_header = {'Authorization': 'Bearer '+ ss_token, 'Content-Type': 'application/json'}
+# Create the columns
+column1 = ss.models.Column({
+  'title': 'New Picklist Column 1',
+  'type': 'PICKLIST',
+  'options': [
+    'First',
+    'Second',
+    'Third'
+  ],
+  'index': 4
+})
 
-response = requests.post (url,headers=myheader,json={"index": "5", "title": "my1stcol", "type": "TEXT_NUMBER"})
-print (response.url)
-print (response.content)
-data = json.loads(response.text)
+column2 = ss.models.Column({
+  'title': 'New Date Column',
+  'type': 'DATE',
+  'index': 4
+})
+
+# Add columns to the sheet
+new_columns = ss.Sheets.add_columns(sheet_id, [column1, column2])
+
